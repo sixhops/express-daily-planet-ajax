@@ -1,3 +1,10 @@
 body {
   background: white;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.btn {
+	margin: 2em;
 }
