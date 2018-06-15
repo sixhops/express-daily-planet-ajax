@@ -9,6 +9,7 @@ $(document).ready(function() {
             url: url,
             data: newData
         }).done(function(data) {
+          console.log('updated!');
           window.location = '/articles';
         });
    });

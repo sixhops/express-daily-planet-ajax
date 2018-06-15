@@ -80,7 +80,7 @@ app.delete('/articles/:id', function(req, res) {
     })
     .then(function(data) {
       console.log(data);
-      res.redirect('/articles');
+      res.sendStatus(200);
   })
 });
 
@@ -91,7 +91,7 @@ app.put('/articles/:id', function(req, res) {
     }, {
       where: {id: req.params.id}
     }).then(function(data) {
-      res.redirect('/articles/:id');
+      res.sendStatus(200);
   })
 });
 
