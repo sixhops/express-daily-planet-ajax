@@ -81,6 +81,15 @@ app.put('/articles/:index', function(req,res) {
   })
 })
 
+app.delete( '/articles/:index', function(req,res) {
+  db.article.destroy({
+    where: {id: req.params.index}
+  }).then( function(data) {
+    console.log(data);
+    res.sendStatus(200);
+  })
+})
+
 
 app.listen(3000, function() {
     console.log("You're listening to the smooth sounds of port 3000 in the morning");

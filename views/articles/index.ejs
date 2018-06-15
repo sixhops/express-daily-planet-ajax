@@ -5,5 +5,7 @@
 <% articles.forEach(function(article) { %>
   <div class="well">
     <a href="/articles/<%= article.id %>"><h2><%= article.title %></h2></a>
+    <a href="/articles/<%= article.id %>/edit"class="btn btn-warning">EDIT</a>
+    <a href="/articles/<%= article.id %>"class="btn btn-danger destroy">DELETE</a>
   </div>
 <% }); %>

@@ -11,6 +11,18 @@ $(document).ready( function() {
             data: updatedInfo
         }).done( function(article) {
             console.log(article);
+            window.location = url;
+        })
+    })
+
+    $('.destroy').on('click', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $.ajax({
+            method: 'DELETE',
+            url: url
+        }).done( function(article) {
+            console.log(article);
             window.location = '/articles';
         })
     })
