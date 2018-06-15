@@ -9,12 +9,6 @@ app.use(ejsLayouts);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/static'));
 
-// var articles = [
-//   { title: 'Bernie! Bernie!', body: '#feelthebern' },
-//   { title: 'Trump for change!', body: 'Make America Great Again' },
-//   { title: 'Brian Hague founds the Daily Planet', body: 'Wow! Amazing! Such good news!' }
-// ];
-
 // GET / - gets the main site index page
 app.get('/', function(req, res) {
   res.render('index');
@@ -43,13 +37,9 @@ app.get('/articles/:index', function(req, res) {
   // TODO: Update this error checking to look at the database (or just remove it)
   // if (index < articles.length && index >= 0) {
     // TODO: Add db access code here.
-    db.article.findOrCreate({
-      where: {
-        title: 'Bernie! Bernie!',
-        body: '#feelthebern'  
-      },
-      defaults: {}
-    }).spread(function(article, created) {
+    db.article.find({
+      where: {id: index},
+    }).then(function(article) {
       console.log(article);
       res.render('articles/show', {article: article});
     });
