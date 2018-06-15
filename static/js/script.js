@@ -1,20 +1,24 @@
 $(document).ready(function () {
-  console.log("jQuery loaded");
-  $('form').on('submit', function (e) {
+
+  // UPDATE on submit function
+  $('.edit-form').on('submit', function(e) {
     e.preventDefault();
-    var newData = $(this).serialize();
+    console.log("you clicked the button");
+    var updatedInfo = $(this).serialize();
     var url = $(this).attr('action');
+    console.log(url);
     $.ajax({
       method: 'PUT',
       url: url,
-      data: newData
-    }).done(function (data) {
+      data: updatedInfo
+    }).done(function(data) {
       console.log(data);
       window.location = '/articles';
     });
   });
 
-  $('#delete').on('click', function (e) {
+  // DELETE function
+  $('a.delete').on('click', function (e) {
     e.preventDefault();
     var url = $(this).attr('href');
     $.ajax({
@@ -25,4 +29,5 @@ $(document).ready(function () {
       window.location = '/articles';
     });
   });
+
 });

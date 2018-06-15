@@ -13,6 +13,7 @@ app.use(express.static(__dirname + '/static'));
 app.get('/', function(req, res) {
   res.render('index');
 });
+
 // GET /about - gets the main site about page
 app.get('/about', function(req, res) {
   res.render('about');
@@ -34,24 +35,22 @@ app.get('/articles/new', function (req, res) {
 // GET /articles/:index - gets a specific article (get one)
 app.get('/articles/:index', function(req, res) {
   var index = parseInt(req.params.index);
-  // TODO: Update this error checking to look at the database (or just remove it)
-  // if (index < articles.length && index >= 0) {
-    // TODO: Add db access code here.
-    db.article.find({
-      where: {id: index},
-    }).then(function(article) {
-      console.log(article);
-      res.render('articles/show', {article: article});
-    });
-  // } else {
-  //   res.send('Error');
-  // }
+  // TODO: Add db access code here.
+  db.article.find({
+    where: {id: index}
+  }).then(function(data) {
+    if(data != null) {
+      res.render('articles/show', {article: data});
+    }else {
+      res.render('articles/404');
+    }
+  });
 });
 
 // POST /articles - create a new article from form data
 app.post('/articles', function(req, res) {
   // TODO: Add db access code here.
-  db.user.create({
+  db.article.create({
     title: req.body.title,
     body: req.body.body
   }).then(function(data) {
@@ -60,25 +59,35 @@ app.post('/articles', function(req, res) {
   });
 });
 
-// TODO: PUT
+// GET /articles/:id/edit - returns form to edit a specific article
+app.get('/articles/:index/edit', function(req, res) {
+  var index = parseInt(req.params.index);
+  db.article.find({
+    where: {id: index}
+  }).then(function(data) {
+    res.render('articles/edit', {article: data});
+  });
+});
+
+// PUT /articles/ - updates article
 app.put('/articles/:index', function(req, res) {
   var index = parseInt(req.params.index);
   db.article.update({
     title: req.body.title,
     body: req.body.body
   }, {
-    where: {index: index}
+    where: {id: index}
   }).then(function(data) {
     console.log(data);
-    res.redirect('/articles');
+    res.sendStatus(200);
   });
 });
 
-// TODO: DELETE
+// DELETE /articles/:index - deletes a specific article
 app.delete('/articles/:index', function(req, res) {
   var index = parseInt(req.params.index);
   db.article.destroy({
-    where: {index: index}
+    where: {id: index}
   }).then(function(data) {
     console.log(data);
     res.sendStatus(200);
