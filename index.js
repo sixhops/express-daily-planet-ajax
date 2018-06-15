@@ -56,7 +56,11 @@ app.get('/articles/:index', function (req, res) {
   db.article.find({
     where: { id: index }
   }).then(function (article) {
-    res.render('articles/show', { article: article });
+    if (article !== null) {
+      res.render('articles/show', { article: article });
+    } else {
+      res.sendFile(__dirname + '/static/404.html');
+    }
   })
 });
 
