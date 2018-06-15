@@ -1,9 +1,11 @@
 var express = require('express');
+var ejsLayouts = require('express-ejs-layouts');
 var bodyParser = require('body-parser');
 var db = require('./models');
 var app = express();
 
 app.set('view engine', 'ejs');
+app.use(ejsLayouts);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/static'));
 
@@ -25,7 +27,9 @@ app.get('/about', function(req, res) {
 // GET /articles - gets full articles list (find all)
 app.get('/articles', function(req, res) {
   // TODO: Add db access code here.
-  res.render('articles/index', { articles: articles });
+  db.article.findAll().then(function(data) {
+    res.render('articles/index', { articles: data });
+  });
 });
 
 // GET /articles/:index - gets a specific article (get one)
@@ -34,7 +38,16 @@ app.get('/articles/:index', function(req, res) {
   // TODO: Update this error checking to look at the database (or just remove it)
   if (index < articles.length && index >= 0) {
     // TODO: Add db access code here.
-    res.render('articles/show', { article: articles[req.params.index] });
+    db.article.findOrCreate({
+      where: {
+        title: 'Bernie! Bernie!',
+        body: '#feelthebern'  
+      },
+      defaults: {}
+    }).spread(function(article, created) {
+      console.log(article);
+      res.render('articles/show', {article: article});
+    });
   } else {
     res.send('Error');
   }
