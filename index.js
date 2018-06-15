@@ -32,11 +32,16 @@ app.get('/articles', function(req, res) {
   });
 });
 
+// GET /articles/new - returns form for new article
+app.get('/articles/new', function (req, res) {
+  res.render('articles/new');
+});
+
 // GET /articles/:index - gets a specific article (get one)
 app.get('/articles/:index', function(req, res) {
   var index = parseInt(req.params.index);
   // TODO: Update this error checking to look at the database (or just remove it)
-  if (index < articles.length && index >= 0) {
+  // if (index < articles.length && index >= 0) {
     // TODO: Add db access code here.
     db.article.findOrCreate({
       where: {
@@ -48,24 +53,47 @@ app.get('/articles/:index', function(req, res) {
       console.log(article);
       res.render('articles/show', {article: article});
     });
-  } else {
-    res.send('Error');
-  }
+  // } else {
+  //   res.send('Error');
+  // }
 });
 
-// GET /articles/new - returns form for new article
-app.get('/articles/new', function(req, res) {
-  res.render('articles/new');
-});
 // POST /articles - create a new article from form data
 app.post('/articles', function(req, res) {
   // TODO: Add db access code here.
-  res.redirect('/articles');
+  db.user.create({
+    title: req.body.title,
+    body: req.body.body
+  }).then(function(data) {
+    console.log(data);
+    res.redirect('/articles');
+  });
 });
 
 // TODO: PUT
+app.put('/articles/:index', function(req, res) {
+  var index = parseInt(req.params.index);
+  db.article.update({
+    title: req.body.title,
+    body: req.body.body
+  }, {
+    where: {index: index}
+  }).then(function(data) {
+    console.log(data);
+    res.redirect('/articles');
+  });
+});
 
 // TODO: DELETE
+app.delete('/articles/:index', function(req, res) {
+  var index = parseInt(req.params.index);
+  db.article.destroy({
+    where: {index: index}
+  }).then(function(data) {
+    console.log(data);
+    res.sendStatus(200);
+  });
+});
 
 app.listen(3000, function() {
     console.log("You're listening to the smooth sounds of port 3000 in the morning");
