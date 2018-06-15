@@ -1,6 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var db = require('./models');
+var ejsLayouts = require("express-ejs-layouts");
 var app = express();
+var path = require('path');
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,25 +19,29 @@ var articles = [
 app.get('/', function(req, res) {
   res.render('index');
 });
+
 // GET /about - gets the main site about page
 app.get('/about', function(req, res) {
   res.render('about');
 });
 
 // GET /articles - gets full articles list
-app.get('/articles', function(req, res) {
-  // TODO: Add db access code here.
+app.get('/articles/', function(req, res) {
+  db.article.findAll().then(function(data) {
   res.render('articles/index', { articles: articles });
 });
+});
+
 
 // GET /articles/:index - gets a specific article
 app.get('/articles/:index', function(req, res) {
   var index = parseInt(req.params.index);
-  if (index < articles.length && index >= 0) {
+    // TODO: update this error checking to look at the database (or just remove it)
+  if (index < articles.length && index >= 0) { 
     // TODO: Add db access code here.
     res.render('articles/show', { article: articles[req.params.index] });
   } else {
-    res.send('Error');
+    res.render('articles/new');
   }
 });
 
@@ -42,10 +49,33 @@ app.get('/articles/:index', function(req, res) {
 app.get('/articles/new', function(req, res) {
   res.render('articles/new');
 });
+
 // POST /articles - create a new article from form data
 app.post('/articles', function(req, res) {
-  // TODO: Add db access code here.
-  res.redirect('/articles');
+  db.article.create({
+    title: req.body.title,
+    body: req.body.body 
+  }).then(function(data) {
+    console.log(data);
+    articles.push({title: req.body.title, body: req.body.body});
+    res.redirect('/articles');
+  });
+});
+
+// GET edit - returns form for editing article
+app.get('/articles/edit/:id', function(req, res) {
+  res.render('articles/edit/:id');
+});
+
+app.delete('/articles/:id', function(req, res) {
+  db.article.destroy({
+    where: {id: req.params.id}
+  }).then(function(data) {
+    article.splice(req.params.id, 1);
+    console.log(data);
+    console.log('fart');
+    res.sendStatus(200);
+  })
 });
 
 app.listen(3000, function() {
