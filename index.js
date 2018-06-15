@@ -38,18 +38,6 @@ app.get('/articles/new', function(req, res) {
   res.render('articles/new');
 });
 
-// GET /articles/:index - gets a specific article
-app.get('/articles/:index', function(req, res) {
-  var index = parseInt(req.params.index);
-  // TODO: update error checking because there is no articles object
-    db.article.find({
-      where: {id: index}
-    }).then( function(article) {
-      res.render('articles/show', {article: article});
-    })
-});
-
-
 // POST /articles - create a new article from form data
 app.post('/articles', function(req, res) {
   // TODO: Add db access code here.
@@ -58,6 +46,17 @@ app.post('/articles', function(req, res) {
     body: req.body.body
   }).then( function(article) {
     res.redirect('/articles');
+  })
+});
+
+// GET /articles/:index - gets a specific article SHOW
+app.get('/articles/:index', function (req, res) {
+  var index = parseInt(req.params.index);
+  // TODO: update error checking because there is no articles object
+  db.article.find({
+    where: { id: index }
+  }).then(function (article) {
+    res.render('articles/show', { article: article });
   })
 });
 
