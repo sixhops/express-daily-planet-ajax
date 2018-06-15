@@ -1,3 +1,5 @@
 body {
-  background: white;
+  background-image: url("https://vignette.wikia.nocookie.net/superman/images/b/b8/Smallville_Metropolis.png/revision/latest?cb=20130125093959");
+  background-repeat: no-repeat;
+  background-size: cover;
 }

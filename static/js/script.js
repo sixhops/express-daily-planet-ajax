@@ -1,19 +1,21 @@
 $(document).ready(function() {
-  $('form').on('submit', function(e) {
+  $('.edit-form').on('submit', function(e) {
+    console.log('working!!')
     e.preventDefault();
-    var newData = $(this).serialize();
+    var updatedInfo = $(this).serialize();
     var url = $(this).attr('action');
+    console.log('submittttttt')
     $.ajax({
       method: "PUT",
       url: url,
-      data: newData
+      data: updatedInfo
     }).done(function(data) {
       console.log(data);
       window.location = '/articles';
     });
   });
 
-  $('a').on('click', function(e) {
+  $('a.delete').on('click', function(e) {
     e.preventDefault();
     var url = $(this).attr('href');
     $.ajax({
