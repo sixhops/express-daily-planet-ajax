@@ -1,0 +1,17 @@
+{
+  "development": {
+    "database": "dailyplanet",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "database": "dailyplanet",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "database": "dailyplanet",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
