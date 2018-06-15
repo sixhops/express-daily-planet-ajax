@@ -38,9 +38,10 @@ app.get('/articles/new', function(req, res) {
 
 // GET /articles/:index - gets a specific article
 app.get('/articles/:index', function(req, res) {
+  var index = parseInt(req.params.index);
   // TODO: update error checking because there is no articles object
     db.article.find({
-      where: {index: req.params.index}
+      where: {id: index}
     }).then( function(article) {
       res.render('articles/show', {article: article});
     })
@@ -59,6 +60,26 @@ app.post('/articles', function(req, res) {
 });
 
 //TODO  ADD PUT & DELETE ROUTES
+app.get('/articles/:index/edit', function(req,res) {
+  // TODO: update error checking because there is no articles object
+  db.article.find({
+    where: { id: req.params.index }
+  }).then( function(article) {
+    res.render('articles/edit', {article: article});
+  })
+})
+
+app.put('/articles/:index', function(req,res) {
+  db.article.update({
+    title: req.body.title,
+    body: req.body.body
+  }, {
+    where: {id: req.params.index}
+  }).then( function(data) {
+    console.log(data);
+    res.send(data)
+  })
+})
 
 
 app.listen(3000, function() {
