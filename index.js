@@ -90,6 +90,9 @@ app.delete( '/articles/:index', function(req,res) {
   })
 })
 
+app.get('*', function(req,res) {
+  res.sendFile(__dirname + '/static/404.html');
+})
 
 app.listen(3000, function() {
     console.log("You're listening to the smooth sounds of port 3000 in the morning");
