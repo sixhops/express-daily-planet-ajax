@@ -13,3 +13,9 @@ body {
 .btn {
   margin: 2em;
 }
+
+.error {
+  margin: 20% auto 0 auto;
+  color: red;
+  font-size: 60px;
+}

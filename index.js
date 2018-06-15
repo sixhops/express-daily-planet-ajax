@@ -50,17 +50,15 @@ app.post('/articles', function(req, res) {
 // GET /articles/:index - gets a specific article
 app.get('/articles/:index', function(req, res) {
   var index = parseInt(req.params.index);
-  if (index >= 0) {
     db.article.find({
       where: {id: req.params.index}
     }).then(function(data) {
-      res.render('articles/show', {article: data});
-    }).catch(function(error) {
-      res.send('RUH ROHHH!!!!');
+      if(!data) {
+        res.render('404');
+      } else {
+        res.render('articles/show', {article: data});
+      }
     });
-  } else {
-    res.send('Error');
-  }
 });
 
 // GET a specific article to edit
@@ -91,6 +89,11 @@ app.delete("/articles/:index", function(req, res) {
   }).then(function(data) {
     res.sendStatus(200);
   });
+});
+
+// GET - wildcard route to handle incorrect urls
+app.get("/*", function(req, res) {
+  res.render('404');
 });
 
 app.listen(port, function() {
