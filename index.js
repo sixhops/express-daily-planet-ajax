@@ -54,7 +54,8 @@ app.get('/articles/:index', function(req, res) {
       where: {id: req.params.index}
     }).then(function(data) {
       if(!data) {
-        res.render('404');
+        console.log(data);
+        res.render('articles/404');
       } else {
         res.render('articles/show', {article: data});
       }

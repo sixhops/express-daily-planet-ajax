@@ -1,21 +1,16 @@
 body {
   margin: 0 auto;
   background: white;
-  width: 80%;
   text-align: center;
   font-family: "Roboto";
-}
-
-.tagline {
-  margin: 30% auto 0 auto;
-}
-
-.btn {
-  margin: 2em;
 }
 
 .error {
   margin: 20% auto 0 auto;
   color: red;
   font-size: 60px;
+}
+
+.nav-link {
+  font-size: 18px;
 }
