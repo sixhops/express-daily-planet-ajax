@@ -1,10 +1,8 @@
 $(document).ready(function () {
-
-  console.log('jquery working');
+  console.log('jQuery working');
 
   // PUT - revise a specific article in the database
 	$('.edit-form').on('submit', function(e) {
-    console.log('edit article clicked!');
 		e.preventDefault();
 		var newData = $(this).serialize();
   	var url = $(this).attr('action');
