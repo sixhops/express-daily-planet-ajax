@@ -1,8 +1,13 @@
 body {
+  margin: 0 auto;
   background: white;
   width: 80%;
-  margin: 0 auto;
   text-align: center;
+  font-family: "Roboto";
+}
+
+.tagline {
+  margin: 30% auto 0 auto;
 }
 
 .btn {

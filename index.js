@@ -1,13 +1,17 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var db = require('./models');
+require('dotenv').config();
+
 var app = express();
 var ejsLayouts = require('express-ejs-layouts');
+var port = process.env.PORT || 2000;
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/static'));
 app.use(ejsLayouts);
+
 
 // GET / - gets the main site index page
 app.get('/', function(req, res) {
@@ -46,18 +50,20 @@ app.post('/articles', function(req, res) {
 // GET /articles/:index - gets a specific article
 app.get('/articles/:index', function(req, res) {
   var index = parseInt(req.params.index);
-  // update this error checking to look at the database (or just remove it)
   if (index >= 0) {
     db.article.find({
       where: {id: req.params.index}
     }).then(function(data) {
       res.render('articles/show', {article: data});
+    }).catch(function(error) {
+      res.send('RUH ROHHH!!!!');
     });
   } else {
     res.send('Error');
   }
 });
 
+// GET a specific article to edit
 app.get('/articles/:index/edit', function(req, res) {
   db.article.find({
     where: {id: req.params.index}
@@ -78,7 +84,7 @@ app.put("/articles/:index", function(req, res) {
   })
 });
 
-// DELETE
+// DELETE a specific article
 app.delete("/articles/:index", function(req, res) {
   db.article.destroy({
     where: {id: req.params.index}
@@ -87,6 +93,6 @@ app.delete("/articles/:index", function(req, res) {
   });
 });
 
-app.listen(3000, function() {
+app.listen(port, function() {
     console.log("You're listening to the smooth sounds of port 3000 in the morning");
 });
