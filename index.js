@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var db = require('./models');
 var app = express();
 
 app.set('view engine', 'ejs');
@@ -16,6 +17,7 @@ var articles = [
 app.get('/', function(req, res) {
   res.render('index');
 });
+
 // GET /about - gets the main site about page
 app.get('/about', function(req, res) {
   res.render('about');
@@ -23,29 +25,71 @@ app.get('/about', function(req, res) {
 
 // GET /articles - gets full articles list
 app.get('/articles', function(req, res) {
-  // TODO: Add db access code here.
-  res.render('articles/index', { articles: articles });
-});
-
-// GET /articles/:index - gets a specific article
-app.get('/articles/:index', function(req, res) {
-  var index = parseInt(req.params.index);
-  if (index < articles.length && index >= 0) {
-    // TODO: Add db access code here.
-    res.render('articles/show', { article: articles[req.params.index] });
-  } else {
-    res.send('Error');
-  }
+  db.article.findAll().then(function(data) {
+    res.render('articles/index', { articles: data });
+  });
 });
 
 // GET /articles/new - returns form for new article
 app.get('/articles/new', function(req, res) {
   res.render('articles/new');
 });
+
 // POST /articles - create a new article from form data
 app.post('/articles', function(req, res) {
   // TODO: Add db access code here.
-  res.redirect('/articles');
+  db.article.create({
+    title: req.body.title,
+    body: req.body.body
+  }).then(function(data) {
+    console.log(data);
+    res.redirect('/articles');
+  });
+});
+
+// GET /articles/:index - gets a specific article
+app.get('/articles/:index', function(req, res) {
+  var index = parseInt(req.params.index);
+  // update this error checking to look at the database (or just remove it)
+  if (index >= 0) {
+    // TODO: Add db access code here.
+    db.article.find({
+      where: {id: req.params.index}
+    }).then(function(data) {
+      res.render('articles/show', {article: data});
+    });
+  } else {
+    res.send('Error');
+  }
+});
+
+app.get('/articles/:index/edit', function(req, res) {
+  db.article.find({
+    where: {id: req.params.index}
+  }).then(function(data) {
+    res.render('articles/edit', {article: data});
+  });
+});
+
+// PUT - edit a specific article
+app.put("/articles/:index", function(req, res) {
+  db.article.update({
+    title: req.body.title,
+    body: req.body.body
+  }, {
+    where: {id: req.params.index}
+  }).then(function(data) {
+    res.send(data);
+  })
+});
+
+// DELETE
+app.delete("/articles/:index", function(req, res) {
+  db.article.destroy({
+    where: {id: req.params.index}
+  }).then(function(data) {
+    res.sendStatus(200);
+  });
 });
 
 app.listen(3000, function() {

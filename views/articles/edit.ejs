@@ -1,0 +1,8 @@
+ <h1>Please edit the article:</h1>
+  <form class='edit-form' method="POST" action="/articles/<%= article.id %>">
+  	<input type="text" name="title" value="<% article.title %>">
+  	<input type="text" name="body" value="<% article.body %>">
+  	<input type="submit" value="Update Article">
+  </form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/js/script.js"></script>

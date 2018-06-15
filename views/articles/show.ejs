@@ -1,5 +1,11 @@
+
 <h1><%= article.title %></h1>
 
 <div class="well">
   <p><%= article.body %></p>
 </div>
+
+<a href="/articles/<%= article.id %>/edit">Edit</a>
+<a class="delete" href="/articles/<%= article.id %>">Delete</a>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/js/script.js"></script>
