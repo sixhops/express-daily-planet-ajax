@@ -4,6 +4,8 @@
 
 <% articles.forEach(function(article, idx) { %>
   <div class="well">
-    <a href="/articles/<%= idx %>"><h2><%= article.title %></h2></a>
+    <a href="/articles/<%= article.id %>"><h2><%= article.title %></h2></a>
+    <a class='btn btn-warning' href='/articles/<%= article.id %>/edit'>Edit this post</a>
+    <a class='btn btn-danger delete' href='/articles/<%= article.id %>'>Delete</a>
   </div>
 <% }); %>
