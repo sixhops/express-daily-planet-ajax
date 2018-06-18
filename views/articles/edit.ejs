@@ -8,6 +8,11 @@
   </div>
 
   <div class="form-group">
+    <label for="author" class="hidden">Title</label>
+    <input type="text" class="form-control" id="author" value="<%= article.author %>" name="author">
+  </div>
+
+  <div class="form-group">
     <label for="body" class="hidden">Body</label>
     <textarea type="text" class="form-control" id="body" name="body"><%= article.body %></textarea>
   </div>

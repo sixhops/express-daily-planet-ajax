@@ -9,8 +9,8 @@ $(document).ready( function() {
             method: 'PUT',
             url: url,
             data: updatedInfo
-        }).done( function(article) {
-            console.log(article);
+        }).done( function(data) {
+            console.log(data);
             window.location = url;
         })
     })
@@ -21,8 +21,8 @@ $(document).ready( function() {
         $.ajax({
             method: 'DELETE',
             url: url
-        }).done( function(article) {
-            console.log(article);
+        }).done( function(data) {
+            console.log(data);
             window.location = '/articles';
         })
     })

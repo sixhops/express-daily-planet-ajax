@@ -9,7 +9,8 @@
 <% articles.forEach(function(article) { %>
   <div class="col-sm-12 col-m-6 col-lg-4 text-center">
     <div class="well">
-      <a href="/articles/<%= article.id %>"><h2><%= article.title %></h2></a>
+      <a href="/articles/<%= article.id %>"><h2><%= article.title %></h2><h4><%= article.author %></h4></a>
+      
       <a href="/articles/<%= article.id %>/edit"class="btn btn-warning">EDIT</a>
       <a href="/articles/<%= article.id %>"class="btn btn-danger destroy">DELETE</a>
     </div>

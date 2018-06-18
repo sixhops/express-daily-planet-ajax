@@ -43,7 +43,8 @@ app.post('/articles', function(req, res) {
   // TODO: Add db access code here.
   db.article.create({
     title: req.body.title,
-    body: req.body.body
+    body: req.body.body,
+    author: req.body.author
   }).then( function(article) {
     res.redirect('/articles');
   })
@@ -70,14 +71,19 @@ app.get('/articles/:index/edit', function(req,res) {
   db.article.find({
     where: { id: req.params.index }
   }).then( function(article) {
-    res.render('articles/edit', {article: article});
+    if (article !== null) {
+      res.render('articles/edit', {article: article});
+    } else {
+      res.sendFile(__dirname + '/static/404.html');
+    }
   })
 })
 
 app.put('/articles/:index', function(req,res) {
   db.article.update({
     title: req.body.title,
-    body: req.body.body
+    body: req.body.body,
+    author: req.body.author
   }, {
     where: {id: req.params.index}
   }).then( function(data) {
