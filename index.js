@@ -84,7 +84,6 @@ app.put('/articles/:index', function(req, res) {
       });
 });
 
-
 //<--------------Delete Route-------------->
 app.delete('/articles/:index', function(req,res) {
   db.article.destroy({
@@ -95,7 +94,6 @@ app.delete('/articles/:index', function(req,res) {
   });
 });
 //<--------------Delete Route End-------------->
-
 
 app.listen(port, function() {
     console.log("You're listening to the smooth sounds of port " + port + " in the morning");
