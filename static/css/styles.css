@@ -1,3 +1,5 @@
 body {
-  background: white;
+  background-image: url("http://cdn1.sciencefiction.com/wp-content/uploads/2018/01/metropolis-1024x576.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
