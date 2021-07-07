@@ -1,5 +1,10 @@
+<a href="/articles/" class="btn btn-primary">Back to Articles</a>
+
 <h1><%= article.title %></h1>
 
 <div class="well">
   <p><%= article.body %></p>
 </div>
+
+<a class="btn btn-primary" href="/articles/<%= article.id %>/edit">Edit</a>
+<a class="btn btn-primary delete" href="/articles/<%= article.id %>">Delete</a>

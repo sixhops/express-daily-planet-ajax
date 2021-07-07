@@ -1,9 +1,7 @@
-<h1>Articles</h1>
+<h1>Articles</h1><br>
 
-<a href="/articles/new" class="btn btn-primary">New Article</a>
-
-<% articles.forEach(function(article, idx) { %>
+<% articles.forEach(function(article) { %>
   <div class="well">
-    <a href="/articles/<%= idx %>"><h2><%= article.title %></h2></a>
+    <a href="/articles/<%= article.id %>"><h2><%= article.title %></h2></a>
   </div>
 <% }); %>
